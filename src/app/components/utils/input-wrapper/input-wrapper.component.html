@@ -1,0 +1,28 @@
+@let inputType = form.inputTypes[controlName]();
+@let labelFinal = form.labels[controlName] ?? label ?? controlName;
+
+<p-float-label>
+    @switch (inputType) {
+        @case (InputType.INPUT_TEXT) {
+            <input [formControlName]="controlName"
+                   [id]="id"
+                   type="text"
+                   pInputText/>
+        }
+
+        @case (InputType.DROPDOWN) {
+            <p-dropdown [formControlName]="controlName"
+                        [inputId]="id"
+                        appendTo="body"
+                        optionLabel="label"
+                        optionValue="value"
+                        [options]="inputOptions"
+                        [filter]="filterable"
+                        [showClear]="clearable"
+                        [virtualScroll]="(inputOptions ?? []).length > 50"
+                        [virtualScrollItemSize]="50"></p-dropdown>
+        }
+    }
+
+    <label [for]="id">{{ labelFinal }}</label>
+</p-float-label>

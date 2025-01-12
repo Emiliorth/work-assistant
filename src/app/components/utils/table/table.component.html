@@ -1,0 +1,46 @@
+@let tableTemplate = tableTemplateSignal();
+@let templates = templatesSignal();
+
+<p-table [value]="dataSignal()"
+         sortMode="multiple">
+    <ng-template #header>
+        <tr>
+            @for (entry of tableTemplate; track entry.field) {
+                @let field = entry.field;
+                @let sortable = entry.sortable;
+
+                <th [pSortableColumn]="sortable ? field : undefined">
+                    {{ field }}
+                    @if (sortable) {
+                        <p-sortIcon [field]="field"/>
+                    }
+                </th>
+            }
+        </tr>
+    </ng-template>
+
+    <ng-template #body
+                 let-entry
+                 let-rowIndex>
+        <tr>
+            @for (column of tableTemplate; track column.field) {
+                @let field = column.field;
+                @let value = field ? entry[field] : null;
+                @let template = templates[$index];
+                <td>
+                    @if (template) {
+                        <ng-container [ngTemplateOutlet]="template"
+                                      [ngTemplateOutletContext]="{entry, rowIndex}"/>
+                    }
+                    @if (column.valueGetter) {
+                        {{ value | customFn: column.valueGetter : [entry] }}
+                    } @else if (column.dataType) {
+                        {{ value }}
+                    } @else {
+                        {{ value }}
+                    }
+                </td>
+            }
+        </tr>
+    </ng-template>
+</p-table>

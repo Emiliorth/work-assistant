@@ -1,0 +1,32 @@
+@if (form) {
+    <app-form [form]="form"
+              (save)="projectsService.selectedProject ? onUpdate($event) : onSave($event)"
+              (customCancel)="onCancel()"/>
+}
+
+<div class="d-flex flex-column gap-2"
+     [ngClass]="{'d-none': form}">
+    <p-button class="align-self-end"
+              label="Add"
+              icon="pi pi-plus"
+              iconPos="right"
+              (onClick)="onCreate()"/>
+
+    <app-table [dataSignal]="projectsService.projectsSignal()"
+               [tableTemplateSignal]="TABLE">
+        <ng-template customTemplate
+                     [actions]="true"
+                     let-entry="entry"
+                     let-rowIndex="rowIndex">
+            <div class="d-flex flex-column gap-2">
+                <p-button label="Edit"
+                          size="small"
+                          (onClick)="onEdit(entry)"/>
+                <p-button label="Delete"
+                          size="small"
+                          [severity]="ButtonSeverity.DANGER"
+                          (onClick)="onDelete(entry)"/>
+            </div>
+        </ng-template>
+    </app-table>
+</div>

@@ -1,0 +1,91 @@
+@let colsLimit = dashboardService.colsLimitSignal();
+@let settingsEnabled = dashboardService.settingsEnabled;
+
+<div class="d-flex flex-column gap-2">
+    <p-button class="align-self-end"
+              [icon]="'pi pi-' + (settingsEnabled ? 'check' : 'cog')"
+              [rounded]="true"
+              [severity]="settingsEnabled ? ButtonSeverity.SUCCESS : ButtonSeverity.SECONDARY"
+              (onClick)="toggleSettings()"/>
+
+    <mat-grid-list [cols]="colsLimit"
+                   gutterSize="8px"
+                   rowHeight="250px">
+        @for (entry of dashboardService.dashboardViews; track entry.componentName) {
+            @let rows = entry.rowsSignal();
+            @let cols = entry.colsSignal();
+
+            <mat-grid-tile [rowspan]="rows"
+                           [colspan]="cols">
+                <app-dashboard-tile>
+                    <ng-template [ngComponentOutlet]="entry.component"/>
+
+                    @if (settingsEnabled) {
+                        <div class="dashboard-tile-settings">
+                            <p-button class="shrinkY"
+                                      icon="pi pi-minus"
+                                      [rounded]="true"
+                                      [severity]="ButtonSeverity.SECONDARY"
+                                      [disabled]="rows === 1"
+                                      (onClick)="entry.shrinkY(save)"/>
+                            <p-button class="remove"
+                                      icon="pi pi-times"
+                                      [rounded]="true"
+                                      [severity]="ButtonSeverity.DANGER"
+                                      (onClick)="onDelete(entry)"/>
+                            <p-button class="shrinkX"
+                                      icon="pi pi-minus"
+                                      [rounded]="true"
+                                      [severity]="ButtonSeverity.SECONDARY"
+                                      [disabled]="cols === 1"
+                                      (onClick)="entry.shrinkX(save)"/>
+                            <div class="move gap-2">
+                                <p-button icon="pi pi-arrow-left"
+                                          [rounded]="true"
+                                          [severity]="ButtonSeverity.SECONDARY"
+                                          [disabled]="$first"
+                                          (onClick)="move($index, -1)"/>
+                                <p-button icon="pi pi-arrow-right"
+                                          [rounded]="true"
+                                          [severity]="ButtonSeverity.SECONDARY"
+                                          [disabled]="$last"
+                                          (onClick)="move($index, 1)"/>
+                            </div>
+                            <p-button class="stretchX"
+                                      icon="pi pi-plus"
+                                      [rounded]="true"
+                                      [severity]="ButtonSeverity.SECONDARY"
+                                      [disabled]="cols === colsLimit"
+                                      (onClick)="entry.stretchX(save)"/>
+                            <p-button class="stretchY"
+                                      icon="pi pi-plus"
+                                      [rounded]="true"
+                                      [severity]="ButtonSeverity.SECONDARY"
+                                      (onClick)="entry.stretchY(save)"/>
+                        </div>
+                    }
+                </app-dashboard-tile>
+            </mat-grid-tile>
+        }
+
+        @if (dashboardService.dashboardViews.length < dashboardService.dashboardViewsOptions.length) {
+            <mat-grid-tile [rowspan]="1"
+                           [colspan]="1">
+                <app-dashboard-tile>
+                    @if (!form) {
+                        <div class="dashboard-tile-new d-flex justify-content-center align-items-center h-100">
+                            <p-button icon="pi pi-plus"
+                                      [rounded]="true"
+                                      (onClick)="openDialog()"/>
+                        </div>
+                    } @else {
+                        <app-form [form]="form"
+                                  [inputsOptions]="inputsOptions"
+                                  (save)="onSave($event)"
+                                  (customCancel)="form = null"/>
+                    }
+                </app-dashboard-tile>
+            </mat-grid-tile>
+        }
+    </mat-grid-list>
+</div>

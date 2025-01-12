@@ -1,0 +1,102 @@
+@let templates = {
+    task,
+    time,
+    stateUpdateDate,
+    handleTimer,
+    resetTimer,
+    openTask,
+    moveToHistoryAndReset,
+    removeWorktime
+};
+
+<div class="row gy-2 justify-content-center">
+    @for (row of templateSignal(); track $index) {
+        <div class="col-12">
+            <div class="row g-2"
+                 [ngClass]="row.class">
+                @for (col of row.elements; track col.element) {
+                    @if (col.element !== WorktimeEntryElement.STATE_UPDATE_DATE || worktime.stateUpdateDate) {
+                        <div [ngClass]="col.class">
+                            <ng-container *ngTemplateOutlet="templates[col.element]"></ng-container>
+                        </div>
+                    }
+                }
+            </div>
+        </div>
+    }
+</div>
+
+<ng-template #task>
+    <app-input-model [(model)]="worktime.task"
+                     [inputType]="InputType.INPUT_TEXT"
+                     label="Task"/>
+</ng-template>
+
+<ng-template #time>
+    <div class="d-flex flex-row gap-1 justify-content-center align-items-center">
+        <p-button [severity]="ButtonSeverity.DANGER"
+                  [rounded]="true"
+                  [outlined]="true"
+                  icon="pi pi-minus"
+                  [disabled]="!worktime.task"
+                  (onClick)="onSubtractTime()"/>
+        <p-button [severity]="ButtonSeverity.SECONDARY"
+                  [text]="true"
+                  [label]="worktime.time | customFn: getDuration"
+                  [disabled]="!worktime.task"
+                  (onClick)="onCopyDuration()"/>
+        <p-button [severity]="ButtonSeverity.SUCCESS"
+                  [rounded]="true"
+                  [outlined]="true"
+                  icon="pi pi-plus"
+                  [disabled]="!worktime.task"
+                  (onClick)="onAddTime()"/>
+    </div>
+</ng-template>
+
+<ng-template #stateUpdateDate>
+    <div class="d-flex">
+        <p-tag styleClass="cursor-pointer"
+               [value]="(worktime.stateUpdateDate | date: 'dd-MM-yyyy HH:mm') ?? ''"
+               [rounded]="true"
+               (click)="worktime.addDifferencingTime()"/>
+        <i class="pi pi-times cursor-pointer p-2"
+           [ngStyle]="{color: 'var(' + (PrimeNgColor.BUTTON_DANGER_BACKGROUND) + ')'}"
+           (click)="worktime.clearStateUpdateDate()"></i>
+    </div>
+</ng-template>
+
+<ng-template #handleTimer>
+    <p-button [severity]="worktime.counting ? 'warn' : 'success'"
+              [icon]="'pi ' + (worktime.counting ? 'pi-pause' : 'pi-play')"
+              iconPos="right"
+              [disabled]="!worktime.task"
+              (onClick)="onHandleTimer()"/>
+</ng-template>
+
+<ng-template #resetTimer>
+    <p-button [severity]="ButtonSeverity.SECONDARY"
+              label="RESET"
+              [disabled]="!worktime.task"
+              (onClick)="onResetTime()"/>
+</ng-template>
+
+<ng-template #openTask>
+    <p-button [severity]="ButtonSeverity.INFO"
+              label="OPEN"
+              [disabled]="!(worktime.task | customFn: isLink)"
+              (onClick)="onOpenTask()"/>
+</ng-template>
+
+<ng-template #moveToHistoryAndReset>
+    <p-button [text]="true"
+              icon="pi pi-clock"
+              [disabled]="!worktime.task || !worktime.time"
+              (onClick)="onMoveToHistoryAndReset()"/>
+</ng-template>
+
+<ng-template #removeWorktime>
+    <i class="pi pi-times cursor-pointer p-2"
+       [ngStyle]="{color: 'var(' + (PrimeNgColor.BUTTON_DANGER_BACKGROUND) + ')'}"
+       (click)="onRemoveWorktime()"></i>
+</ng-template>

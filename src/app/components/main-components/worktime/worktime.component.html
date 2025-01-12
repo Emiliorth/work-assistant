@@ -1,0 +1,17 @@
+<div class="d-flex flex-column gap-2">
+    <div class="d-flex flex-column gap-2 float-label-spacer">
+        @for (entry of worktimeService.worktime; track entry.id) {
+            @if ($index) {
+                <p-divider/>
+            }
+
+            <app-worktime-entry [worktime]="entry"/>
+        }
+    </div>
+
+    <p-button class="align-self-center"
+              [severity]="ButtonSeverity.SUCCESS"
+              [rounded]="true"
+              icon="pi pi-plus"
+              (onClick)="onAddWorktime()"/>
+</div>

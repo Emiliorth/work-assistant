@@ -1,0 +1,8 @@
+<div class="d-flex flex-column gap-2">
+    @for (entry of worktimeService.worktimeHistorySignal(); track entry.id) {
+        <div class="d-flex gap-2 align-items-center">
+            <p-tag [value]="entry.task"/>
+            <span>{{ entry.dateArchived | date: 'dd-MM-yyyy HH:mm:ss' }} - {{ entry.time | customFn: getDuration }}</span>
+        </div>
+    }
+</div>

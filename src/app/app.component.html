@@ -1,0 +1,19 @@
+@if (!sessionService.sessionErrorSignal()) {
+    <div class="background">
+        <div class="container-fluid">
+            <app-dashboard/>
+        </div>
+    </div>
+}
+
+<app-dialog [display]="dialogService.display"
+            [header]="dialogService.header"
+            [message]="dialogService.message"
+            [width]="dialogService.width"
+            [confirmButton]="dialogService.confirmButton"
+            [confirmButtonSeverity]="dialogService.confirmButtonSeverity"
+            [confirmFn]="dialogService.confirmFn"
+            [cancelButton]="dialogService.cancelButton"
+            [cancelFn]="dialogService.cancelFn"
+            [closable]="dialogService.closable"
+            (displayChange)="dialogService.closeDialog()"></app-dialog>

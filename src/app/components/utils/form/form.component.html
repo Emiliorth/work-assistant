@@ -1,0 +1,30 @@
+<form class="row gy-7"
+      [formGroup]="form.formGroup"
+      (ngSubmit)="onSave()">
+    @for (entry of form.controlNames; track entry) {
+        <div [ngClass]="form.classes[entry]">
+            <app-input-wrapper [controlName]="entry"
+                               [form]="form"
+                               [inputOptions]="inputsOptions?.[entry]"/>
+        </div>
+    }
+    <div class="col-12">
+        <div class="row g-4 flex-wrap-reverse">
+            <div class="col-md col-12">
+                <p-button label="Cancel"
+                          [outlined]="true"
+                          [severity]="ButtonSeverity.DANGER"
+                          (onClick)="onCancel()"/>
+            </div>
+            <div class="col-md col-12">
+                <p-button label="Reset"
+                          [outlined]="true"
+                          (onClick)="form.reset()"/>
+            </div>
+            <div class="col-md col-12">
+                <p-button label="Save"
+                          type="submit"/>
+            </div>
+        </div>
+    </div>
+</form>

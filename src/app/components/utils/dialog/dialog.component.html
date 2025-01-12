@@ -1,0 +1,38 @@
+<p-dialog [(visible)]="display"
+          [header]="header"
+          [modal]="true"
+          appendTo="body"
+          [style]="{
+          width: width,
+          'max-width': maxWidth
+          }"
+          [draggable]="false"
+          [maximizable]="false"
+          [closable]="closable"
+          [resizable]="false">
+    @if (message) {
+        <span>{{ message }}</span>
+    } @else {
+        <div class="custom-dialog-content">
+            <ng-content></ng-content>
+        </div>
+    }
+    @if (cancelButton || confirmButton) {
+        <ng-template #footer>
+            <div class="d-flex"
+                 [ngClass]="'justify-content-' + (cancelButton ? 'between' : 'end')">
+                @if (cancelButton) {
+                    <p-button [label]="cancelButton"
+                              [severity]="ButtonSeverity.SECONDARY"
+                              (onClick)="onCancel()"/>
+                }
+
+                @if (confirmButton) {
+                    <p-button [label]="confirmButton"
+                              [severity]="confirmButtonSeverity"
+                              (onClick)="onConfirm()"/>
+                }
+            </div>
+        </ng-template>
+    }
+</p-dialog>

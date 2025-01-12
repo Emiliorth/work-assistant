@@ -1,0 +1,8 @@
+@if (form) {
+    <form [formGroup]="form.formGroup">
+        <app-input-wrapper [controlName]="controlName"
+                           [form]="form"
+                           [label]="label"
+                           [inputOptions]="inputOptions"/>
+    </form>
+}

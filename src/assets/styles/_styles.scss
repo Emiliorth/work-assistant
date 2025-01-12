@@ -1,0 +1,165 @@
+@use 'primeicons/primeicons.css';
+@import './variables/variables';
+
+html {
+    font-size: 14px;
+}
+
+body {
+    margin: 0;
+    font-family: Inter var, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', Segoe UI Symbol;
+}
+
+* {
+    &::-webkit-scrollbar {
+        width: 8px;
+        height: 8px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+        background-color: var(--p-primary-400);
+        border: 2px solid transparent;
+        border-radius: 4px;
+        background-clip: padding-box;
+    }
+
+    &::-webkit-scrollbar-corner {
+        background-color: transparent;
+    }
+}
+
+.cursor-pointer {
+    cursor: pointer;
+}
+
+.background {
+    background-size: 300% 300%;
+    background-image: linear-gradient(90deg, rgb(0, 46, 74) 0%, rgb(9, 48, 121) 30%, rgb(32, 196, 255) 100%);
+    min-height: 100vh;
+    -webkit-animation: AnimateBG 20s ease infinite;
+    animation: AnimateBG 20s ease infinite;
+}
+
+@-webkit-keyframes AnimateBG {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+@keyframes AnimateBG {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+@mixin dashboard-tile-base {
+    border-radius: var(--p-border-radius-xl);
+    height: 100%;
+    width: 100%;
+}
+
+app-dashboard-tile {
+    /* padding-top: calc(var(--bs-gutter-x) * 0.5);
+    padding-bottom: calc(var(--bs-gutter-x) * 0.5); */
+    @include dashboard-tile-base;
+    background-color: var(--p-content-background);
+    overflow-y: hidden;
+
+    &:has(> * > .dashboard-tile-new) {
+        background-color: rgba(from var(--p-content-background) r g b / .5);
+    }
+
+    .dashboard-tile {
+        height: 100%;
+        overflow-y: auto;
+        padding-top: $form-label-spacer;
+        padding-bottom: $form-label-spacer;
+        display: flex;
+        flex-direction: column;
+
+        &:has(:nth-child(2).dashboard-tile-settings) {
+            > :nth-child(1) {
+                opacity: .3;
+            }
+        }
+    }
+}
+
+.dashboard-tile-settings {
+    @include dashboard-tile-base;
+    background-color: rgba(0, 0, 0, .6);
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: grid;
+    grid-template-areas:
+            '. shrinkY remove'
+            'shrinkX move stretchX'
+            '. stretchY .';
+
+    & > * {
+        padding: 1rem;
+    }
+
+    .remove {
+        grid-area: remove;
+        justify-self: end;
+    }
+
+    .move {
+        grid-area: move;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .shrinkY {
+        grid-area: shrinkY;
+        justify-self: center;
+    }
+
+    .shrinkX {
+        grid-area: shrinkX;
+        align-content: center;
+    }
+
+    .stretchX {
+        grid-area: stretchX;
+        justify-self: end;
+        align-content: center;
+    }
+
+    .stretchY {
+        grid-area: stretchY;
+        justify-self: center;
+        align-content: end;
+
+    }
+}
+
+app-projects, app-worktime-entry, app-form {
+    .p-button:not(.p-button-rounded) {
+        width: 100% !important;
+    }
+
+    .p-button-icon-only {
+        min-width: var(--p-button-icon-only-width);
+    }
+}
+
+.custom-dialog-content:has(> app-form:first-child),
+.custom-dialog-content:has(> * > app-form:first-child) {
+    padding-top: $form-label-spacer;
+}

@@ -1,0 +1,96 @@
+$enable-cssgrid: false;
+
+$bp-xs: 0;
+$bp-sm: 576px;
+$bp-md: 768px;
+$bp-lg: 992px;
+$bp-xl: 1200px;
+$bp-xxl: 1400px;
+
+$bp-below-sm: $bp-sm - 1;
+$bp-below-md: $bp-md - 1;
+$bp-below-lg: $bp-lg - 1;
+$bp-below-xl: $bp-xl - 1;
+$bp-below-xxl: $bp-xxl - 1;
+
+$breakpoints: (
+        sm: $bp-sm,
+        md: $bp-md,
+        lg: $bp-lg,
+        xl: $bp-xl
+);
+
+$belowBreakpoints: (
+        below-sm: $bp-below-sm,
+        below-md: $bp-below-md,
+        below-lg: $bp-below-lg,
+        below-xl: $bp-below-xl
+);
+
+$cmw-sm: 540px;
+$cmw-md: 720px;
+$cmw-lg: 960px;
+$cmw-xl: 1140px;
+$cmw-xxl: 1320px;
+
+$grid-breakpoints: (
+        xs: $bp-xs,
+        sm: $bp-sm,
+        md: $bp-md,
+        lg: $bp-lg,
+        xl: $bp-xl,
+        xxl: $bp-xxl
+);
+
+$container-max-widths: (
+        sm: $cmw-sm,
+        md: $cmw-md,
+        lg: $cmw-lg,
+        xl: $cmw-xl,
+        xxl: $cmw-xxl
+);
+
+$spacer: 1rem;
+$steps-values: (
+        0: 0,
+        1: .25,
+        2: .5,
+        3: .75,
+        4: 1,
+        5: 1.25,
+        6: 1.5,
+        7: 2,
+        8: 2.5,
+        9: 3
+);
+
+$spacers: (
+        0: map-get($steps-values, 0),
+        1: $spacer * map-get($steps-values, 1),
+        2: $spacer * map-get($steps-values, 2),
+        3: $spacer * map-get($steps-values, 3),
+        4: $spacer * map-get($steps-values, 4),
+        5: $spacer * map-get($steps-values, 5),
+        6: $spacer * map-get($steps-values, 6),
+        7: $spacer * map-get($steps-values, 7),
+        8: $spacer * map-get($steps-values, 8),
+        9: $spacer * map-get($steps-values, 9)
+);
+
+$grid-columns: 12;
+$grid-gutter-width: 2rem;
+$grid-row-columns: 6;
+$enable-negative-margins: true;
+
+$gutters: (
+        0: map-get($steps-values, 0),
+        1: $spacer * map-get($steps-values, 1),
+        2: $spacer * map-get($steps-values, 2),
+        3: $spacer * map-get($steps-values, 3),
+        4: $spacer * map-get($steps-values, 4),
+        5: $spacer * map-get($steps-values, 5),
+        6: $spacer * map-get($steps-values, 6),
+        7: $spacer * map-get($steps-values, 7),
+        8: $spacer * map-get($steps-values, 8),
+        9: $spacer * map-get($steps-values, 9)
+);

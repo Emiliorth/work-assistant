@@ -1,0 +1,80 @@
+@let inputOptions = inputOptionsSignal();
+
+<div class="d-flex flex-column gap-2">
+    @if (inputOptions.length) {
+        <app-input-model [(model)]="selectedProject"
+                         [inputType]="InputType.DROPDOWN"
+                         label="Project"
+                         [inputOptions]="inputOptionsSignal()"/>
+    }
+
+    <div class="d-flex justify-content-between gap-2">
+        <div class="d-flex flex-wrap gap-2">
+            @if (inputOptions.length) {
+                <p-button pTooltip="Create PR"
+                          tooltipPosition="top"
+                          icon="pi pi-plus"
+                          [rounded]="true"
+                          [disabled]="!selectedProject?.createPr"
+                          (onClick)="selectedProject?.openCreatePr()"/>
+                <p-button pTooltip="PR"
+                          tooltipPosition="top"
+                          icon="pi pi-align-left"
+                          [severity]="ButtonSeverity.INFO"
+                          [rounded]="true"
+                          [disabled]="!selectedProject?.pr"
+                          (onClick)="selectedProject?.openPr()"/>
+                <p-button pTooltip="Commits"
+                          tooltipPosition="top"
+                          icon="pi pi-list"
+                          [severity]="ButtonSeverity.INFO"
+                          [rounded]="true"
+                          [disabled]="!selectedProject?.commits"
+                          (onClick)="selectedProject?.openCommits()"/>
+                <p-button pTooltip="Repository"
+                          tooltipPosition="top"
+                          icon="pi pi-code"
+                          [severity]="ButtonSeverity.INFO"
+                          [rounded]="true"
+                          [disabled]="!selectedProject?.repository"
+                          (onClick)="selectedProject?.openRepository()"/>
+                <p-button pTooltip="Repositories"
+                          tooltipPosition="top"
+                          icon="pi pi-warehouse"
+                          [severity]="ButtonSeverity.INFO"
+                          [rounded]="true"
+                          [disabled]="!selectedProject?.repositories"
+                          (onClick)="selectedProject?.openRepositories()"/>
+                <p-button pTooltip="Your work"
+                          tooltipPosition="top"
+                          icon="pi pi-list-check"
+                          [severity]="ButtonSeverity.INFO"
+                          [rounded]="true"
+                          [disabled]="!selectedProject?.yourWork"
+                          (onClick)="selectedProject?.openYourWork()"/>
+                <p-button pTooltip="Free tasks"
+                          tooltipPosition="top"
+                          icon="pi pi-align-justify"
+                          [severity]="ButtonSeverity.INFO"
+                          [rounded]="true"
+                          [disabled]="!selectedProject?.freeTasks"
+                          (onClick)="selectedProject?.openFreeTasks()"/>
+            }
+        </div>
+
+        <p-button pTooltip="Settings"
+                  tooltipPosition="top"
+                  icon="pi pi-cog"
+                  [severity]="ButtonSeverity.SECONDARY"
+                  [rounded]="true"
+                  (onClick)="dialog.openDialog()"/>
+    </div>
+</div>
+
+<app-dialog header="Manage projects"
+            width="600px"
+            #dialog>
+    @if (dialog.display()) {
+        <app-projects-manage/>
+    }
+</app-dialog>

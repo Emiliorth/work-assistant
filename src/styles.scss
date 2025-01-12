@@ -1,0 +1,14 @@
+@layer bootstrap, primeng, base;
+
+@layer bootstrap {
+    @import 'assets/styles/bootstrap';
+}
+
+@layer primeng {
+    @import 'assets/styles/extensions/primeng-extension';
+}
+
+@layer base {
+    @import 'assets/styles/extensions/angular-material-extension';
+    @import 'assets/styles/styles';
+}
