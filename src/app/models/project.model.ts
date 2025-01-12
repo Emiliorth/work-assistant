@@ -1,5 +1,4 @@
 import {ProjectTemplate} from 'src/app/interfaces/project.interface';
-import {ProjectFormData} from 'src/app/models/forms/project-form.model';
 import {generateId, openInNewTab} from 'src/app/utils/misc.util';
 
 export class Project implements ProjectTemplate {
@@ -48,7 +47,7 @@ export class Project implements ProjectTemplate {
         this.freeTasks = freeTasks;
     }
 
-    public updateData(data: ProjectTemplate | ProjectFormData & {id: string}) {
+    public updateData(data: ProjectTemplate) {
         const {id, name, createPr, pr, commits, repository, repositories, yourWork, freeTasks} = data;
         this.id = id ?? this.id;
         this.name = name;
