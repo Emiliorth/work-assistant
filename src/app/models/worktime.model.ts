@@ -1,26 +1,24 @@
-import {filter, interval, Subscription, tap} from 'rxjs';
 import {WorktimeStateHistory} from 'src/app/interfaces/worktime-state-history.interface';
 import {WorktimeTemplate} from 'src/app/interfaces/worktime-template.interface';
 import {generateId, getDuration, TIME_STEP} from 'src/app/utils/misc.util';
+import {setInterval, clearInterval} from 'worker-timers';
 
 export class Worktime implements WorktimeTemplate {
     public id: string = generateId();
     public task: string = '';
     public time: number = 0;
-    public counting: boolean = false;
+    public interval: number | null = null;
     public stateUpdateDate: Date | null = null;
     public stateHistory: WorktimeStateHistory[] = [];
-    public subscription: Subscription = new Subscription();
 
     constructor(data?: WorktimeTemplate) {
-        this.subscription.add(this.timerLogic());
         if (!data) return;
 
-        const {id, task, time, counting, stateUpdateDate, stateHistory} = data;
+        const {id, task, time, stateUpdateDate, stateHistory} = data;
         this.id = id;
         this.task = task;
         this.time = time;
-        this.counting = counting;
+        this.interval = null;
         this.stateUpdateDate = stateUpdateDate;
         this.stateHistory = stateHistory;
     }
@@ -29,25 +27,19 @@ export class Worktime implements WorktimeTemplate {
         this.time += 1;
     }
 
-    private timerLogic() {
-        return interval(1000).pipe(
-            filter(() => this.counting),
-            tap(() => this.increment())
-        ).subscribe();
-    }
-
     public handleTimer() {
-        this.counting ? this.stopTimer() : this.startTimer();
+        this.interval ? this.stopTimer() : this.startTimer();
     }
 
     public startTimer() {
-        this.counting = true;
+        this.interval = setInterval(() => this.increment(), TIME_STEP);
         this.addStateHistory(true);
         this.clearStateUpdateDate();
     }
 
     public stopTimer(noCopy?: boolean) {
-        this.counting = false;
+        if (this.interval) clearInterval(this.interval);
+        this.interval = null;
         this.addStateHistory(false);
         this.stateUpdateDate = new Date();
         if (!noCopy) this.copyDuration();

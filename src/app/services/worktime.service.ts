@@ -1,19 +1,20 @@
 import {Injectable, signal, WritableSignal} from '@angular/core';
-import {interval, Subscription} from 'rxjs';
 import {LocalStorageKey} from 'src/app/enums/local-storage-key.enum';
 import {HistoricalWorktimeTemplate} from 'src/app/interfaces/historical-worktime-template.interface';
 import {WorktimeTemplate} from 'src/app/interfaces/worktime-template.interface';
 import {mapWorktimeToWorktimeTemplate} from 'src/app/mappers/worktime.mapper';
 import {HistoricalWorktime} from 'src/app/models/historical-worktime.model';
+import {Worktime} from 'src/app/models/worktime.model';
 import {DialogService} from 'src/app/services/dialog.service';
 import {SessionService} from 'src/app/services/session.service';
-import {Worktime} from '../models/worktime.model';
+import {clearInterval, setInterval} from 'worker-timers';
 
 @Injectable({providedIn: 'root'})
 export class WorktimeService {
     public worktime: Worktime[] = [];
     public worktimeHistorySignal: WritableSignal<HistoricalWorktime[]> = signal([]);
-    private subscription: Subscription = new Subscription();
+
+    private saveInterval: number | null = null;
 
     constructor(
         private sessionService: SessionService,
@@ -29,7 +30,7 @@ export class WorktimeService {
             const data = JSON.parse(dataString) as WorktimeTemplate[];
             data.forEach((entry) => {
                 const worktime = new Worktime(entry);
-                if (entry.counting) worktime.startTimer();
+                if (entry.interval) worktime.startTimer();
                 this.worktime.push(worktime);
             });
         }
@@ -50,7 +51,7 @@ export class WorktimeService {
     }
 
     private startSaveInterval() {
-        this.subscription.add(interval(1000).subscribe(() => {
+        this.saveInterval = setInterval(() => {
             if (!this.sessionService.sessionErrorSignal()) {
                 this.saveWorktimeToLocalStorage();
                 return;
@@ -63,11 +64,12 @@ export class WorktimeService {
                 'There is an another application instance running in the browser. Please close other instances and reload page.',
                 {closable: false}
             );
-        }));
+        }, 1000);
     }
 
     private stopSaveInterval() {
-        this.subscription.unsubscribe();
+        if (this.saveInterval) clearInterval(this.saveInterval);
+        this.saveInterval = null;
     }
 
     private saveWorktimeToLocalStorage() {
@@ -87,7 +89,6 @@ export class WorktimeService {
 
     public removeWorktime(worktime: Worktime) {
         worktime.stopTimer(true);
-        worktime.subscription.unsubscribe();
         this.addWorktimeToHistory(worktime);
         const index = this.worktime.indexOf(worktime);
         if (index < 0) return;

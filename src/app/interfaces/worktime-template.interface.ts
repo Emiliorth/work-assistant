@@ -4,7 +4,7 @@ export interface WorktimeTemplate {
     id: string;
     task: string;
     time: number;
-    counting: boolean;
+    interval: number | null;
     stateUpdateDate: Date | null;
     stateHistory: WorktimeStateHistory[];
 }

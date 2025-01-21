@@ -67,8 +67,8 @@
 </ng-template>
 
 <ng-template #handleTimer>
-    <p-button [severity]="worktime.counting ? 'warn' : 'success'"
-              [icon]="'pi ' + (worktime.counting ? 'pi-pause' : 'pi-play')"
+    <p-button [severity]="worktime.interval ? 'warn' : 'success'"
+              [icon]="'pi ' + (worktime.interval ? 'pi-pause' : 'pi-play')"
               iconPos="right"
               [disabled]="!worktime.task"
               (onClick)="onHandleTimer()"/>
