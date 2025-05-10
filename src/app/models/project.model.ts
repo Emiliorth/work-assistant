@@ -4,101 +4,60 @@ import {generateId, openInNewTab} from 'src/app/utils/misc.util';
 export class Project implements ProjectTemplate {
     public id: string;
     public name: string;
-    public createPr: string;
-    public pr: string;
-    public commits: string;
-    public repository: string;
-    public repositories: string;
-    public yourWork: string;
-    public freeTasks: string;
+    public createPRURL: string;
+    public prURL: string;
+    public commitsURL: string;
+    public repositoryURL: string;
 
-    constructor(data: {
-            id?: string,
-            name: string,
-            createPr: string,
-            pr: string,
-            commits: string,
-            repository: string,
-            repositories: string,
-            yourWork: string,
-            freeTasks: string
-        }
-    ) {
+    constructor(data: ProjectTemplate & {id?: string}) {
         const {
             id,
             name,
-            createPr,
-            pr,
-            commits,
-            repository,
-            repositories,
-            yourWork,
-            freeTasks
+            createPRURL,
+            prURL,
+            commitsURL,
+            repositoryURL
         } = data;
 
         this.id = id ?? generateId();
         this.name = name;
-        this.createPr = createPr;
-        this.pr = pr;
-        this.commits = commits;
-        this.repository = repository;
-        this.repositories = repositories;
-        this.yourWork = yourWork;
-        this.freeTasks = freeTasks;
+        this.createPRURL = createPRURL;
+        this.prURL = prURL;
+        this.commitsURL = commitsURL;
+        this.repositoryURL = repositoryURL;
     }
 
     public updateData(data: ProjectTemplate) {
-        const {id, name, createPr, pr, commits, repository, repositories, yourWork, freeTasks} = data;
+        const {id, name, createPRURL, prURL, commitsURL, repositoryURL} = data;
         this.id = id ?? this.id;
         this.name = name;
-        this.createPr = createPr;
-        this.pr = pr;
-        this.commits = commits;
-        this.repository = repository;
-        this.repositories = repositories;
-        this.yourWork = yourWork;
-        this.freeTasks = freeTasks;
+        this.createPRURL = createPRURL;
+        this.prURL = prURL;
+        this.commitsURL = commitsURL;
+        this.repositoryURL = repositoryURL;
     }
 
     public openCreatePr() {
-        if (!this.createPr) return;
+        if (!this.createPRURL) return;
 
-        openInNewTab(this.createPr);
+        openInNewTab(this.createPRURL);
     }
 
     public openPr() {
-        if (!this.pr) return;
+        if (!this.prURL) return;
 
-        openInNewTab(this.pr);
+        openInNewTab(this.prURL);
     }
 
     public openCommits() {
-        if (!this.commits) return;
+        if (!this.commitsURL) return;
 
-        openInNewTab(this.commits);
+        openInNewTab(this.commitsURL);
     }
 
     public openRepository() {
-        if (!this.repository) return;
+        if (!this.repositoryURL) return;
 
-        openInNewTab(this.repository);
-    }
-
-    public openRepositories() {
-        if (!this.repositories) return;
-
-        openInNewTab(this.repositories);
-    }
-
-    public openYourWork() {
-        if (!this.yourWork) return;
-
-        openInNewTab(this.yourWork);
-    }
-
-    public openFreeTasks() {
-        if (!this.freeTasks) return;
-
-        openInNewTab(this.freeTasks);
+        openInNewTab(this.repositoryURL);
     }
 }
