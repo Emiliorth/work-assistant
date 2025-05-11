@@ -5,39 +5,59 @@
         <app-input-model [(model)]="selectedProject"
                          [inputType]="InputType.DROPDOWN"
                          label="Project"
-                         [inputOptions]="inputOptionsSignal()"/>
+                         [inputOptions]="inputOptions"/>
     }
 
     <div class="d-flex justify-content-between gap-2">
         <div class="d-flex flex-wrap gap-2">
-            @if (inputOptions.length) {
-                <p-button pTooltip="Create PR"
-                          tooltipPosition="top"
-                          icon="pi pi-plus"
-                          [rounded]="true"
-                          [disabled]="!selectedProject?.createPRURL"
-                          (onClick)="selectedProject?.openCreatePr()"/>
-                <p-button pTooltip="PR"
-                          tooltipPosition="top"
-                          icon="pi pi-align-left"
-                          [severity]="ButtonSeverity.INFO"
-                          [rounded]="true"
-                          [disabled]="!selectedProject?.prURL"
-                          (onClick)="selectedProject?.openPr()"/>
-                <p-button pTooltip="Commits"
-                          tooltipPosition="top"
-                          icon="pi pi-list"
-                          [severity]="ButtonSeverity.INFO"
-                          [rounded]="true"
-                          [disabled]="!selectedProject?.commitsURL"
-                          (onClick)="selectedProject?.openCommits()"/>
-                <p-button pTooltip="Repository"
-                          tooltipPosition="top"
-                          icon="pi pi-code"
-                          [severity]="ButtonSeverity.INFO"
-                          [rounded]="true"
-                          [disabled]="!selectedProject?.repositoryURL"
-                          (onClick)="selectedProject?.openRepository()"/>
+            @if (selectedProject) {
+                @if (selectedProject.data.createPRURL) {
+                    <p-button pTooltip="Create PR"
+                              tooltipPosition="top"
+                              icon="pi pi-plus"
+                              [rounded]="true"
+                              (onClick)="selectedProject.openCreatePr()"/>
+                }
+                @if (selectedProject.data.prURL) {
+                    <p-button pTooltip="PR"
+                              tooltipPosition="top"
+                              icon="pi pi-align-left"
+                              [severity]="ButtonSeverity.INFO"
+                              [rounded]="true"
+                              (onClick)="selectedProject.openPr()"/>
+                }
+                @if (selectedProject.data.commitsURL) {
+                    <p-button pTooltip="Commits"
+                              tooltipPosition="top"
+                              icon="pi pi-list"
+                              [severity]="ButtonSeverity.INFO"
+                              [rounded]="true"
+                              (onClick)="selectedProject.openCommits()"/>
+                }
+                @if (selectedProject.data.repositoryURL) {
+                    <p-button pTooltip="Repository"
+                              tooltipPosition="top"
+                              icon="pi pi-code"
+                              [severity]="ButtonSeverity.INFO"
+                              [rounded]="true"
+                              (onClick)="selectedProject.openRepository()"/>
+                }
+                @if (selectedProject.data.feURL) {
+                    <p-button pTooltip="Repository"
+                              tooltipPosition="top"
+                              icon="pi pi-code"
+                              [severity]="ButtonSeverity.INFO"
+                              [rounded]="true"
+                              (onClick)="selectedProject.openFrontEnd()"/>
+                }
+                @if (selectedProject.data.swaggerURL) {
+                    <p-button pTooltip="Repository"
+                              tooltipPosition="top"
+                              icon="pi pi-code"
+                              [severity]="ButtonSeverity.INFO"
+                              [rounded]="true"
+                              (onClick)="selectedProject.openSwagger()"/>
+                }
             }
         </div>
 

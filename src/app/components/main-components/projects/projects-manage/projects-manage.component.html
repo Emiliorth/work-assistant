@@ -1,9 +1,3 @@
-@if (form) {
-    <app-form [form]="form"
-              (save)="projectsService.selectedProject ? onUpdate($event) : onSave($event)"
-              (customCancel)="onCancel()"/>
-}
-
 <div class="d-flex flex-column gap-2"
      [ngClass]="{'d-none': form}">
     <p-button class="align-self-end"
@@ -30,3 +24,9 @@
         </ng-template>
     </app-table>
 </div>
+
+@if (form) {
+    <app-form [form]="form"
+              (save)="projectsService.selectedProject ? onUpdate($event) : onSave($event)"
+              (customCancel)="onCancel()"/>
+}

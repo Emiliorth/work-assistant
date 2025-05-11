@@ -10,7 +10,7 @@ import {DASHBOARD_COLS_MAP} from 'src/app/helpers/dashboard.helper';
 import {DashboardViewTemplate} from 'src/app/interfaces/dashboard-view-template.interface';
 import {mapDashboardViewListToDashboardViewTemplateList} from 'src/app/mappers/dashboard.mapper';
 import {DashboardView} from 'src/app/models/dashboard-view.model';
-import {DashboardViewFormControl, DashboardViewFormData} from 'src/app/models/forms/dashboard-view--form.model';
+import {DashboardViewFormControl, DashboardViewFormData} from 'src/app/models/forms/dashboard-view-form.model';
 import {nonNullable} from 'src/app/utils/misc.util';
 
 @Injectable({providedIn: 'root'})

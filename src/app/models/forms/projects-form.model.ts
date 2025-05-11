@@ -1,13 +1,13 @@
 import {InputType} from 'src/app/enums/input-type.enum';
-import {DynamicForm} from 'src/app/models/forms/dynamic-form.model';
+import {DynamicForm} from 'src/app/models/forms/core/dynamic-form.model';
 import {Project} from 'src/app/models/project.model';
 
 export enum ProjectsFormControl {
-    NAME = 'name'
+    PROJECT = 'project'
 }
 
 export interface ProjectsFormData {
-    [ProjectsFormControl.NAME]: Project | null;
+    [ProjectsFormControl.PROJECT]: Project | null;
 }
 
 export class ProjectsForm extends DynamicForm<ProjectsFormData> {
@@ -18,8 +18,8 @@ export class ProjectsForm extends DynamicForm<ProjectsFormData> {
     protected prepareDefinitions() {
         this.prepareDefinitionsLogic({
             controlNames: ProjectsFormControl,
-            inputTypes: {[ProjectsFormControl.NAME]: InputType.DROPDOWN},
-            classes: {[ProjectsFormControl.NAME]: 'col-12'}
+            inputTypes: {[ProjectsFormControl.PROJECT]: InputType.DROPDOWN},
+            classes: {[ProjectsFormControl.PROJECT]: 'col-12'}
         });
     }
 }

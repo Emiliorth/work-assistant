@@ -4,7 +4,7 @@ import {ReactiveFormsModule} from '@angular/forms';
 import {ButtonModule} from 'primeng/button';
 import {InputWrapperComponent} from 'src/app/components/utils/input-wrapper/input-wrapper.component';
 import {ButtonSeverity} from 'src/app/enums/button-severity.enum';
-import {DynamicForm} from 'src/app/models/forms/dynamic-form.model';
+import {DynamicForm} from 'src/app/models/forms/core/dynamic-form.model';
 import {InputsOptions} from 'src/app/types/inputs-options.type';
 
 const COMPONENTS = [

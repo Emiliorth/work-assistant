@@ -1,6 +1,5 @@
 import {DatePipe, NgClass, NgStyle, NgTemplateOutlet} from '@angular/common';
 import {AfterViewInit, Component, ElementRef, Input, OnInit, signal, WritableSignal} from '@angular/core';
-import {FormsModule} from '@angular/forms';
 import {ButtonModule} from 'primeng/button';
 import {InputTextModule} from 'primeng/inputtext';
 import {TagModule} from 'primeng/tag';
@@ -37,7 +36,6 @@ const PRIME_NG = [
 @Component({
     selector: 'app-worktime-entry',
     imports: [
-        FormsModule,
         DatePipe,
         NgStyle,
         NgClass,
@@ -45,7 +43,6 @@ const PRIME_NG = [
         ...COMPONENTS,
         ...PIPES,
         ...PRIME_NG
-
     ],
     templateUrl: './worktime-entry.component.html'
 })
@@ -89,43 +86,43 @@ export class WorktimeEntryComponent implements OnInit, AfterViewInit {
     }
 
     protected onSubtractTime() {
-        if (!this.worktime.task) return;
+        if (!this.worktime.data.task) return;
 
         this.worktime.subtractTime();
     }
 
     protected onCopyDuration() {
-        if (!this.worktime.task) return;
+        if (!this.worktime.data.task) return;
 
         this.worktime.copyDuration();
     }
 
     protected onAddTime() {
-        if (!this.worktime.task) return;
+        if (!this.worktime.data.task) return;
 
         this.worktime.addTime();
     }
 
     protected onHandleTimer() {
-        if (!this.worktime.task) return;
+        if (!this.worktime.data.task) return;
 
         this.worktime.handleTimer();
     }
 
     protected onResetTime() {
-        if (!this.worktime.task) return;
+        if (!this.worktime.data.task) return;
 
         this.worktime.resetTime();
     }
 
     protected onOpenTask() {
-        if (!isLink(this.worktime.task)) return;
+        if (!isLink(this.worktime.data.task)) return;
 
         this.worktime.openTask();
     }
 
     protected onMoveToHistoryAndReset() {
-        if (!this.worktime.task || !this.worktime.time) return;
+        if (!this.worktime.data.task || !this.worktime.data.time) return;
 
         this.worktimeService.addWorktimeToHistoryAndReset(this.worktime);
     }

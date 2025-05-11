@@ -26,9 +26,9 @@ export class ProjectsService {
     }
 
     public createProject(data: ProjectFormData, callback: () => void) {
-        if (this.projectsSignal().some(entry => entry.name === data.name)) return;
+        if (this.projectsSignal().some(entry => entry.data.name === data.name)) return;
 
-        this.projectsSignal.update(value => [...value, new Project({id: generateId(), ...data})]);
+        this.projectsSignal.update(value => [...value, new Project(data)]);
         this.saveProjectsToLocalStorage();
         callback();
     }
@@ -36,12 +36,12 @@ export class ProjectsService {
     public updateProject(data: ProjectFormData, callback: () => void) {
         if (!this.selectedProject) return;
 
-        const {id} = this.selectedProject;
-        if (this.projectsSignal().some(entry => entry.name === data.name && entry.id !== id)) return;
+        const {id} = this.selectedProject.data;
+        if (this.projectsSignal().some(entry => entry.data.name === data.name && entry.data.id !== id)) return;
 
         const result: ProjectTemplate = {id, ...data};
         this.projectsSignal.update(value => {
-            const found = value.find(entry => entry.id === id);
+            const found = value.find(entry => entry.data.id === id);
             if (!found) return value;
 
             const index = value.indexOf(found);
@@ -54,7 +54,7 @@ export class ProjectsService {
     }
 
     public deleteProject(id: string) {
-        this.projectsSignal.update(value => [...value.filter(entry => entry.id !== id)]);
+        this.projectsSignal.update(value => [...value.filter(entry => entry.data.id !== id)]);
         this.saveProjectsToLocalStorage();
     }
 

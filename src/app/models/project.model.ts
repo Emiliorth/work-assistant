@@ -1,63 +1,53 @@
 import {ProjectTemplate} from 'src/app/interfaces/project.interface';
 import {generateId, openInNewTab} from 'src/app/utils/misc.util';
 
-export class Project implements ProjectTemplate {
-    public id: string;
-    public name: string;
-    public createPRURL: string;
-    public prURL: string;
-    public commitsURL: string;
-    public repositoryURL: string;
+export class Project {
+    public data: ProjectTemplate;
 
-    constructor(data: ProjectTemplate & {id?: string}) {
-        const {
-            id,
-            name,
-            createPRURL,
-            prURL,
-            commitsURL,
-            repositoryURL
-        } = data;
-
-        this.id = id ?? generateId();
-        this.name = name;
-        this.createPRURL = createPRURL;
-        this.prURL = prURL;
-        this.commitsURL = commitsURL;
-        this.repositoryURL = repositoryURL;
+    constructor(data: ProjectTemplate) {
+        this.data = {
+            ...data,
+            id: data.id ?? generateId()
+        };
     }
 
     public updateData(data: ProjectTemplate) {
-        const {id, name, createPRURL, prURL, commitsURL, repositoryURL} = data;
-        this.id = id ?? this.id;
-        this.name = name;
-        this.createPRURL = createPRURL;
-        this.prURL = prURL;
-        this.commitsURL = commitsURL;
-        this.repositoryURL = repositoryURL;
+        this.data = {...data, id: data.id ?? this.data.id};
     }
 
     public openCreatePr() {
-        if (!this.createPRURL) return;
+        if (!this.data.createPRURL) return;
 
-        openInNewTab(this.createPRURL);
+        openInNewTab(this.data.createPRURL);
     }
 
     public openPr() {
-        if (!this.prURL) return;
+        if (!this.data.prURL) return;
 
-        openInNewTab(this.prURL);
+        openInNewTab(this.data.prURL);
     }
 
     public openCommits() {
-        if (!this.commitsURL) return;
+        if (!this.data.commitsURL) return;
 
-        openInNewTab(this.commitsURL);
+        openInNewTab(this.data.commitsURL);
     }
 
     public openRepository() {
-        if (!this.repositoryURL) return;
+        if (!this.data.repositoryURL) return;
 
-        openInNewTab(this.repositoryURL);
+        openInNewTab(this.data.repositoryURL);
+    }
+
+    public openFrontEnd() {
+        if (!this.data.feURL) return;
+
+        openInNewTab(this.data.feURL);
+    }
+
+    public openSwagger() {
+        if (!this.data.swaggerURL) return;
+
+        openInNewTab(this.data.swaggerURL);
     }
 }

@@ -5,7 +5,7 @@ import {FloatLabel, FloatLabelModule} from 'primeng/floatlabel';
 import {IftaLabelModule} from 'primeng/iftalabel';
 import {InputTextModule} from 'primeng/inputtext';
 import {InputType} from 'src/app/enums/input-type.enum';
-import {DynamicForm} from 'src/app/models/forms/dynamic-form.model';
+import {DynamicForm} from 'src/app/models/forms/core/dynamic-form.model';
 import {InputOptions} from 'src/app/types/input-options.type';
 import {generateId} from 'src/app/utils/misc.util';
 

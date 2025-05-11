@@ -15,13 +15,13 @@ export const convertObjectValuesToSignals = <T>(value?: TypedObject<T>) => {
         value;
 };
 
-export const prepareInputOptionsFromObjects = <T extends TypedObject<any>, U>(data: T[], options: {
+export const prepareInputOptionsFromObjects = <T extends TypedObject<any>>(data: T[], options: {
     labelKey: string;
     valueKey?: string;
 }) => {
     const {labelKey, valueKey} = options;
-    const inputOptions: InputOptions<U> = data.map((entry) => {
-        const inputOption: InputOption<U> = {
+    const inputOptions: InputOptions<T> = data.map((entry) => {
+        const inputOption: InputOption<T> = {
             label: entry[labelKey],
             value: valueKey ? entry[valueKey] : entry
         };

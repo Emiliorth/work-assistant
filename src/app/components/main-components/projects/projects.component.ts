@@ -40,7 +40,7 @@ const PRIME_NG = [
 })
 export class ProjectsComponent implements OnInit {
     protected form: ProjectsForm = new ProjectsForm();
-    protected inputOptionsSignal!: Signal<InputOptions<string>>;
+    protected inputOptionsSignal!: Signal<InputOptions<Project>>;
     protected selectedProject: Project | null = null;
 
     protected readonly InputType = InputType;
@@ -62,11 +62,11 @@ export class ProjectsComponent implements OnInit {
         return this.projectsService.projects$.subscribe((value) => {
             if (!this.selectedProject) return;
 
-            if (value.every(entry => entry.id !== this.selectedProject?.id)) this.selectedProject = null;
+            if (value.every(entry => entry.data.id !== this.selectedProject?.data.id)) this.selectedProject = null;
         });
     };
 
     private prepareInputOptions() {
-        return computed(() => prepareInputOptionsFromObjects<Project, string>(this.projectsService.projectsSignal(), {labelKey: 'name'}));
+        return computed(() => prepareInputOptionsFromObjects<Project>(this.projectsService.projectsSignal(), {labelKey: 'name'}));
     }
 }

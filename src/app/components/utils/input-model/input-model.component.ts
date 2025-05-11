@@ -5,7 +5,7 @@ import {InputWrapperComponent} from 'src/app/components/utils/input-wrapper/inpu
 import {AutoSubscribe} from 'src/app/decorators/auto-subscribe.decorator';
 import {AutoUnsubscribe} from 'src/app/decorators/auto-unsubscribe.decorator';
 import {InputType} from 'src/app/enums/input-type.enum';
-import {ModelForm} from 'src/app/models/forms/model-form.model';
+import {ModelForm} from 'src/app/models/forms/core/model-form.model';
 import {FormDefinition} from 'src/app/types/form/form-definition.type';
 import {InputOptions} from 'src/app/types/input-options.type';
 import {generateId} from 'src/app/utils/misc.util';

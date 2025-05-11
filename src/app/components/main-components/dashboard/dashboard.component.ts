@@ -12,7 +12,7 @@ import {
     DashboardViewForm,
     DashboardViewFormControl,
     DashboardViewFormData
-} from 'src/app/models/forms/dashboard-view--form.model';
+} from 'src/app/models/forms/dashboard-view-form.model';
 import {DashboardService} from 'src/app/services/dashboard.service';
 import {InputsOptions} from 'src/app/types/inputs-options.type';
 import {prepareInputOptionsFromObjects} from 'src/app/utils/object.util';

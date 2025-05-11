@@ -44,8 +44,7 @@ export class WorktimeService {
 
         const data = JSON.parse(dataString) as HistoricalWorktimeTemplate[];
         data.forEach((entry) => {
-            const {id, task, time, dateArchived, stateHistory} = entry;
-            const historicalWorktime = new HistoricalWorktime(task, time, dateArchived, id, stateHistory);
+            const historicalWorktime = new HistoricalWorktime(entry);
             this.worktimeHistorySignal.update(value => [...value, historicalWorktime]);
         });
     }
@@ -106,11 +105,11 @@ export class WorktimeService {
     }
 
     public addWorktimeToHistory(worktime: Worktime) {
-        const {time, task} = worktime;
+        const {time} = worktime.data;
         if (time === 0) return;
 
         const dateArchived = new Date();
-        this.worktimeHistorySignal.update(value => [...value, new HistoricalWorktime(task, time, dateArchived)]);
+        this.worktimeHistorySignal.update(value => [...value, new HistoricalWorktime({...worktime.data, dateArchived})]);
         this.saveWorktimeHistoryToLocalStorage();
     }
 }

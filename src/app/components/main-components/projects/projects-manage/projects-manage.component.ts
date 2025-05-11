@@ -64,7 +64,10 @@ export class ProjectsManageComponent {
     }
 
     protected onDelete(project: Project) {
-        this.projectsService.deleteProject(project.id);
+        const {id} = project.data;
+        if (!id) return;
+
+        this.projectsService.deleteProject(id);
     }
 
     protected onCancel() {
